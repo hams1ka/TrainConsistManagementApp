@@ -321,3 +321,37 @@ class UseCase9TrainConsistApp {
         }
     }
 }
+// ============================================================
+// UC10: Count Total Seats in Train (Stream reduce)
+// Concepts: map(), reduce(), Method Reference,
+//           Functional Aggregation, Stream Pipeline
+// ============================================================
+class UseCase10TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC10: Total Seat Count        ");
+        System.out.println("=================================");
+
+        // Reuse Bogie list
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper",     72));
+        bogies.add(new Bogie("AC Chair",    64));
+        bogies.add(new Bogie("First Class", 18));
+        bogies.add(new Bogie("General",     90));
+        bogies.add(new Bogie("Pantry",       0));
+
+        // Stream pipeline:
+        // map() extracts capacity -> reduce() sums all values
+        int totalSeats = bogies.stream()
+            .map(b -> b.capacity)         // Transform Bogie to int
+            .reduce(0, Integer::sum);     // Sum all capacities starting from 0
+
+        // Display result
+        System.out.println("\nBogie Breakdown:");
+        for (Bogie b : bogies) {
+            System.out.println("  " + b.name + " -> " + b.capacity + " seats");
+        }
+        System.out.println("\nTotal Seating Capacity: " + totalSeats + " seats");
+    }
+}
