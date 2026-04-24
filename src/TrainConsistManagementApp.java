@@ -91,3 +91,41 @@ class UseCase3TrainConsistApp {
         System.out.println("(Duplicates were automatically rejected by HashSet)");
     }
 }
+// ============================================================
+// UC4: Maintain Bogie Order Using LinkedList
+// Concepts: LinkedList, Deque operations, addFirst(),
+//           addLast(), peek(), Dynamic ordering
+// ============================================================
+class UseCase4TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC4: Bogie Order (LinkedList) ");
+        System.out.println("=================================");
+
+        // LinkedList maintains insertion order and allows
+        // adding elements at both front and rear
+        LinkedList<String> consist = new LinkedList<>();
+
+        // Add bogies to rear (normal attachment)
+        consist.addLast("Sleeper-B1");
+        consist.addLast("Sleeper-B2");
+        consist.addLast("AC-Chair-C1");
+
+        // Add engine to front (priority attachment)
+        consist.addFirst("Engine");
+
+        // Add guard van to rear (end of train)
+        consist.addLast("Guard-Van");
+
+        // Display consist in order
+        System.out.println("\nTrain Consist (Front to Rear):");
+        for (String bogie : consist) {
+            System.out.println("  -> " + bogie);
+        }
+
+        System.out.println("\nFirst bogie (Front): " + consist.peekFirst());
+        System.out.println("Last bogie  (Rear) : " + consist.peekLast());
+        System.out.println("Total Bogies       : " + consist.size());
+    }
+}
