@@ -847,3 +847,70 @@ class UseCase19TrainConsistApp {
                            "requires sorted data.");
     }
 }
+// ============================================================
+// UC20: Exception Handling During Search Operations
+// Concepts: Defensive Programming, IllegalStateException,
+//           Fail-Fast Principle, State Validation,
+//           Runtime Exception Handling
+// ============================================================
+class UseCase20TrainConsistApp {
+
+    // Search method — validates state before searching
+    static void searchBogie(List<String> bogies, String key) {
+        // Defensive check: prevent search on empty consist
+        if (bogies.isEmpty()) {
+            // Throw IllegalStateException — invalid system state
+            throw new IllegalStateException(
+                "Cannot search: Train consist is empty. " +
+                "Please add bogies before searching.");
+        }
+
+        // Perform linear search if consist is valid
+        boolean found = false;
+        for (String bogie : bogies) {
+            if (bogie.equals(key)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            System.out.println("  FOUND: '" + key + "' is in the consist.");
+        } else {
+            System.out.println("  NOT FOUND: '" + key + "' is not in the consist.");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC20: Exception During Search ");
+        System.out.println("=================================");
+
+        // Test 1: Search on empty consist — should throw exception
+        System.out.println("\n[Test 1: Search on Empty Consist]");
+        try {
+            List<String> emptyConsist = new ArrayList<>();
+            searchBogie(emptyConsist, "B001");
+        } catch (IllegalStateException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        // Test 2: Search on valid consist
+        System.out.println("\n[Test 2: Search on Valid Consist]");
+        try {
+            List<String> consist = new ArrayList<>();
+            consist.add("B001");
+            consist.add("B002");
+            consist.add("B003");
+
+            System.out.println("Consist: " + consist);
+            searchBogie(consist, "B002"); // Should find
+            searchBogie(consist, "B099"); // Should not find
+        } catch (IllegalStateException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        System.out.println("\n[System remains stable after all scenarios]");
+    }
+}
