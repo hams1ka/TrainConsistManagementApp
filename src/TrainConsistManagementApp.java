@@ -58,3 +58,36 @@ class UseCase2TrainConsistApp {
         System.out.println("\nTotal Bogies in Consist: " + consist.size());
     }
 }
+// ============================================================
+// UC3: Track Unique Bogie IDs (HashSet)
+// Concepts: HashSet, Set Interface, add(), Automatic
+//           Deduplication, Unordered Storage
+// ============================================================
+class UseCase3TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC3: Unique Bogie IDs (HashSet)");
+        System.out.println("=================================");
+
+        // HashSet stores only unique elements — no duplicates allowed
+        Set<String> bogieIds = new HashSet<>();
+
+        // Add bogie IDs
+        bogieIds.add("B001");
+        bogieIds.add("B002");
+        bogieIds.add("B003");
+        bogieIds.add("B001"); // Duplicate — will be ignored automatically
+        bogieIds.add("B004");
+        bogieIds.add("B002"); // Duplicate — will be ignored automatically
+
+        // Display unique bogie IDs
+        System.out.println("\nUnique Bogie IDs in Train:");
+        for (String id : bogieIds) {
+            System.out.println("  -> " + id);
+        }
+
+        System.out.println("\nTotal Unique Bogies: " + bogieIds.size());
+        System.out.println("(Duplicates were automatically rejected by HashSet)");
+    }
+}
