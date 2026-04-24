@@ -200,3 +200,50 @@ class UseCase6TrainConsistApp {
                            bogieCapacity.get("First Class"));
     }
 }
+// ============================================================
+// UC7: Sort Bogies by Capacity (Comparator)
+// Concepts: Comparator Interface, Custom Objects, List,
+//           sort(), Lambda Expressions
+// ============================================================
+
+// Bogie class — custom object with name and capacity
+class Bogie {
+    String name;
+    int capacity;
+
+    public Bogie(String name, int capacity) {
+        this.name     = name;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (capacity: " + capacity + ")";
+    }
+}
+
+class UseCase7TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC7: Sort Bogies by Capacity  ");
+        System.out.println("=================================");
+
+        // Create list of Bogie objects
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper",      72));
+        bogies.add(new Bogie("AC Chair",     64));
+        bogies.add(new Bogie("First Class",  18));
+        bogies.add(new Bogie("General",      90));
+        bogies.add(new Bogie("Pantry",        0));
+
+        // Sort using Comparator — ascending order by capacity
+        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+
+        // Display sorted bogies
+        System.out.println("\nBogies Sorted by Capacity (Low to High):");
+        for (Bogie b : bogies) {
+            System.out.println("  -> " + b);
+        }
+    }
+}
