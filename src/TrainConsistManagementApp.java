@@ -247,3 +247,37 @@ class UseCase7TrainConsistApp {
         }
     }
 }
+// ============================================================
+// UC8: Filter Passenger Bogies Using Streams
+// Concepts: Stream API, stream(), filter(), collect(),
+//           Lambda Expressions, Declarative Programming
+// ============================================================
+class UseCase8TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC8: Filter Bogies (Streams)  ");
+        System.out.println("=================================");
+
+        // Reuse Bogie list from UC7
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper",     72));
+        bogies.add(new Bogie("AC Chair",    64));
+        bogies.add(new Bogie("First Class", 18));
+        bogies.add(new Bogie("General",     90));
+        bogies.add(new Bogie("Pantry",       0));
+
+        // Stream pipeline: filter bogies with capacity > 60
+        List<Bogie> highCapacity = bogies.stream()
+            .filter(b -> b.capacity > 60) // Keep only bogies with capacity > 60
+            .collect(Collectors.toList()); // Collect result into new list
+
+        // Display filtered bogies
+        System.out.println("\nBogies with Capacity > 60:");
+        for (Bogie b : highCapacity) {
+            System.out.println("  -> " + b);
+        }
+
+        System.out.println("\nTotal qualifying bogies: " + highCapacity.size());
+    }
+}
