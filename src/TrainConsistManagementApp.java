@@ -129,3 +129,38 @@ class UseCase4TrainConsistApp {
         System.out.println("Total Bogies       : " + consist.size());
     }
 }
+// ============================================================
+// UC5: Preserve Insertion Order of Bogies (LinkedHashSet)
+// Concepts: LinkedHashSet, Set Interface, add(),
+//           Automatic Deduplication, Insertion Order Preservation
+// ============================================================
+class UseCase5TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC5: Ordered Unique Bogies    ");
+        System.out.println("=================================");
+
+        // LinkedHashSet = uniqueness (like HashSet) +
+        //                 insertion order (like List)
+        Set<String> formation = new LinkedHashSet<>();
+
+        // Attach bogies in order
+        formation.add("Engine");
+        formation.add("Sleeper");
+        formation.add("Cargo");
+        formation.add("Guard");
+
+        // Attempt to attach duplicate — will be silently ignored
+        formation.add("Sleeper"); // Duplicate ignored
+
+        // Display formation in insertion order
+        System.out.println("\nTrain Formation (Insertion Order):");
+        for (String bogie : formation) {
+            System.out.println("  -> " + bogie);
+        }
+
+        System.out.println("\nTotal Bogies (no duplicates): " + formation.size());
+        System.out.println("(LinkedHashSet preserved order AND rejected duplicates)");
+    }
+}
