@@ -791,3 +791,59 @@ class UseCase18TrainConsistApp {
                            "works on unsorted data.");
     }
 }
+// ============================================================
+// UC19: Binary Search for Bogie ID (Optimized Searching)
+// Concepts: Binary Search, Divide-and-Conquer, Sorted Data,
+//           compareTo(), O(log n) complexity
+// ============================================================
+class UseCase19TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC19: Binary Search (Bogie ID)");
+        System.out.println("=================================");
+
+        // Binary search requires SORTED data
+        String[] bogieIds = {"B001", "B002", "B003", "B005", "B007", "B008", "B009"};
+
+        System.out.println("\nSorted Bogie IDs:");
+        System.out.println("  " + Arrays.toString(bogieIds));
+
+        // Search targets
+        String[] searchKeys = {"B005", "B010"};
+
+        for (String key : searchKeys) {
+            System.out.println("\nSearching for: " + key);
+
+            // Binary search — divide and conquer
+            int low  = 0;
+            int high = bogieIds.length - 1;
+            int result = -1;
+
+            while (low <= high) {
+                int mid = (low + high) / 2; // Find middle index
+
+                int cmp = key.compareTo(bogieIds[mid]); // Lexicographic comparison
+
+                if (cmp == 0) {
+                    result = mid; // Found!
+                    break;
+                } else if (cmp < 0) {
+                    high = mid - 1; // Key is smaller — search left half
+                } else {
+                    low = mid + 1;  // Key is larger — search right half
+                }
+            }
+
+            if (result != -1) {
+                System.out.println("  FOUND at index " + result +
+                                   " -> " + bogieIds[result]);
+            } else {
+                System.out.println("  NOT FOUND in train consist.");
+            }
+        }
+
+        System.out.println("\nNote: Binary Search is O(log n) — " +
+                           "requires sorted data.");
+    }
+}
