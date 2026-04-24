@@ -711,3 +711,35 @@ class UseCase16TrainConsistApp {
                            "educational only, not for production.");
     }
 }
+// ============================================================
+// UC17: Sort Bogie Names Using Arrays.sort()
+// Concepts: Arrays.sort(), Natural Ordering, O(n log n),
+//           Library Optimization, Arrays.toString()
+// ============================================================
+class UseCase17TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC17: Sort Names (Arrays.sort)");
+        System.out.println("=================================");
+
+        // Array of bogie type names
+        String[] bogieTypes = {
+            "Sleeper", "General", "AC Chair",
+            "First Class", "Pantry", "Guard Van", "Engine"
+        };
+
+        System.out.println("\nBefore Sorting:");
+        System.out.println("  " + Arrays.toString(bogieTypes));
+
+        // Arrays.sort() — built-in optimized sort (TimSort for objects)
+        // O(n log n) — much faster than Bubble Sort
+        Arrays.sort(bogieTypes);
+
+        System.out.println("\nAfter Arrays.sort() (Alphabetical):");
+        System.out.println("  " + Arrays.toString(bogieTypes));
+
+        System.out.println("\nNote: Arrays.sort() uses O(n log n) — " +
+                           "preferred over manual Bubble Sort.");
+    }
+}
