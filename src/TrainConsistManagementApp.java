@@ -743,3 +743,51 @@ class UseCase17TrainConsistApp {
                            "preferred over manual Bubble Sort.");
     }
 }
+// ============================================================
+// UC18: Linear Search for Bogie ID
+// Concepts: Linear Search, Sequential Traversal,
+//           equals(), Early Termination, O(n) complexity
+// ============================================================
+class UseCase18TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC18: Linear Search (Bogie ID)");
+        System.out.println("=================================");
+
+        // Array of bogie IDs (unsorted)
+        String[] bogieIds = {"B003", "B007", "B001", "B009", "B005", "B002", "B008"};
+
+        System.out.println("\nBogie IDs in Train:");
+        System.out.println("  " + Arrays.toString(bogieIds));
+
+        // Search targets
+        String[] searchKeys = {"B005", "B010"};
+
+        for (String key : searchKeys) {
+            System.out.println("\nSearching for: " + key);
+
+            boolean found = false;
+            int foundIndex = -1;
+
+            // Linear search — traverse one by one
+            for (int i = 0; i < bogieIds.length; i++) {
+                if (bogieIds[i].equals(key)) { // equals() for safe string comparison
+                    found      = true;
+                    foundIndex = i;
+                    break; // Early termination — stop once found
+                }
+            }
+
+            if (found) {
+                System.out.println("  FOUND at index " + foundIndex +
+                                   " -> " + bogieIds[foundIndex]);
+            } else {
+                System.out.println("  NOT FOUND in train consist.");
+            }
+        }
+
+        System.out.println("\nNote: Linear Search is O(n) — " +
+                           "works on unsorted data.");
+    }
+}
