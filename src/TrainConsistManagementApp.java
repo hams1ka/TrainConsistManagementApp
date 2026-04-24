@@ -393,3 +393,74 @@ class UseCase11TrainConsistApp {
         }
     }
 }
+// ============================================================
+// UC12: Safety Compliance Check for Goods Bogies
+// Concepts: Streams API, allMatch(), Lambda Expressions,
+//           Conditional Logic in Streams, Business Rule Modeling
+// ============================================================
+
+// GoodsBogie — represents a goods/cargo bogie
+class GoodsBogie {
+    String bogieId;
+    String shape;   // "Cylindrical" or "Rectangular"
+    String cargo;   // "Petroleum", "Coal", "Steel", etc.
+
+    public GoodsBogie(String bogieId, String shape, String cargo) {
+        this.bogieId = bogieId;
+        this.shape   = shape;
+        this.cargo   = cargo;
+    }
+
+    @Override
+    public String toString() {
+        return bogieId + " [" + shape + " | " + cargo + "]";
+    }
+}
+
+class UseCase12TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC12: Safety Compliance Check ");
+        System.out.println("=================================");
+
+        // Create goods bogies
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+        goodsBogies.add(new GoodsBogie("G001", "Cylindrical", "Petroleum"));
+        goodsBogies.add(new GoodsBogie("G002", "Rectangular", "Coal"));
+        goodsBogies.add(new GoodsBogie("G003", "Cylindrical", "Petroleum"));
+
+        System.out.println("\nGoods Bogies:");
+        for (GoodsBogie g : goodsBogies) {
+            System.out.println("  -> " + g);
+        }
+
+        // Safety rule: Cylindrical bogies can only carry Petroleum
+        // allMatch() checks if ALL bogies pass the safety rule
+        boolean isSafe = goodsBogies.stream()
+            .allMatch(g -> {
+                if (g.shape.equals("Cylindrical")) {
+                    return g.cargo.equals("Petroleum"); // Must be petroleum
+                }
+                return true; // Rectangular bogies have no restriction here
+            });
+
+        System.out.println("\nSafety Compliance Result: " +
+                           (isSafe ? "TRAIN IS SAFE ✓" : "SAFETY VIOLATION ✗"));
+
+        // Test with a violation
+        System.out.println("\n--- Testing with violation ---");
+        goodsBogies.add(new GoodsBogie("G004", "Cylindrical", "Coal")); // Violation!
+
+        boolean isSafe2 = goodsBogies.stream()
+            .allMatch(g -> {
+                if (g.shape.equals("Cylindrical")) {
+                    return g.cargo.equals("Petroleum");
+                }
+                return true;
+            });
+
+        System.out.println("Safety Compliance Result: " +
+                           (isSafe2 ? "TRAIN IS SAFE ✓" : "SAFETY VIOLATION ✗"));
+    }
+}
