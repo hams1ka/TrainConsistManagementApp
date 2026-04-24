@@ -281,3 +281,43 @@ class UseCase8TrainConsistApp {
         System.out.println("\nTotal qualifying bogies: " + highCapacity.size());
     }
 }
+// ============================================================
+// UC9: Group Bogies by Type (Collectors.groupingBy)
+// Concepts: Collectors.groupingBy(), Stream Pipeline,
+//           Map Output, Lambda Classification
+// ============================================================
+class UseCase9TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC9: Group Bogies by Type     ");
+        System.out.println("=================================");
+
+        // Create bogies with type categories
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper-B1",   72));
+        bogies.add(new Bogie("Sleeper-B2",   72));
+        bogies.add(new Bogie("AC Chair-C1",  64));
+        bogies.add(new Bogie("AC Chair-C2",  64));
+        bogies.add(new Bogie("General-G1",   90));
+        bogies.add(new Bogie("Pantry",         0));
+
+        // Group bogies by their type prefix using groupingBy
+        // Classification: extract type from name (first word before '-')
+        Map<String, List<Bogie>> grouped = bogies.stream()
+            .collect(Collectors.groupingBy(b -> {
+                // Extract type: "Sleeper-B1" -> "Sleeper"
+                if (b.name.contains("-")) return b.name.split("-")[0];
+                return b.name;
+            }));
+
+        // Display grouped bogies
+        System.out.println("\nBogies Grouped by Type:");
+        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
+            System.out.println("\n  Type: " + entry.getKey());
+            for (Bogie b : entry.getValue()) {
+                System.out.println("    -> " + b);
+            }
+        }
+    }
+}
