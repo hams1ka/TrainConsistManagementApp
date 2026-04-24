@@ -464,3 +464,56 @@ class UseCase12TrainConsistApp {
                            (isSafe2 ? "TRAIN IS SAFE ✓" : "SAFETY VIOLATION ✗"));
     }
 }
+// ============================================================
+// UC13: Performance Comparison (Loops vs Streams)
+// Concepts: System.nanoTime(), Benchmarking,
+//           Loop-Based vs Stream-Based Processing
+// ============================================================
+class UseCase13TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC13: Performance Comparison  ");
+        System.out.println("=================================");
+
+        // Create a large list of bogies for benchmarking
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper",     72));
+        bogies.add(new Bogie("AC Chair",    64));
+        bogies.add(new Bogie("First Class", 18));
+        bogies.add(new Bogie("General",     90));
+        bogies.add(new Bogie("Pantry",       0));
+        bogies.add(new Bogie("Sleeper-2",   72));
+        bogies.add(new Bogie("General-2",   90));
+
+        // --- Loop-Based Filtering ---
+        long loopStart = System.nanoTime();
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
+        long loopEnd = System.nanoTime();
+        long loopTime = loopEnd - loopStart;
+
+        // --- Stream-Based Filtering ---
+        long streamStart = System.nanoTime();
+        List<Bogie> streamResult = bogies.stream()
+            .filter(b -> b.capacity > 60)
+            .collect(Collectors.toList());
+        long streamEnd = System.nanoTime();
+        long streamTime = streamEnd - streamStart;
+
+        // Display results
+        System.out.println("\nFiltering bogies with capacity > 60:");
+        System.out.println("=".repeat(45));
+        System.out.printf("%-30s : %d ns%n", "Loop-Based Filtering",   loopTime);
+        System.out.printf("%-30s : %d ns%n", "Stream-Based Filtering", streamTime);
+        System.out.println("=".repeat(45));
+        System.out.println("Loop   result count  : " + loopResult.size());
+        System.out.println("Stream result count  : " + streamResult.size());
+        System.out.println("\nNote: Lower ns = faster execution.");
+        System.out.println("Note: Stream overhead may show higher for small datasets.");
+    }
+}
