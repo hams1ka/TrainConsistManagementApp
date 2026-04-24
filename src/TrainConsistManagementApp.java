@@ -517,3 +517,90 @@ class UseCase13TrainConsistApp {
         System.out.println("Note: Stream overhead may show higher for small datasets.");
     }
 }
+// ============================================================
+// UC14: Handle Invalid Bogie Capacity (Custom Exception)
+// Concepts: Custom Exception, Exception Inheritance,
+//           throw, throws, Fail-Fast Validation
+// ============================================================
+
+// Custom checked exception for invalid bogie capacity
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+// PassengerBogie — validates capacity on creation
+class PassengerBogie {
+    String name;
+    int capacity;
+
+    // Constructor throws exception if capacity is invalid
+    public PassengerBogie(String name, int capacity)
+            throws InvalidCapacityException {
+        // Fail-fast: reject invalid capacity immediately
+        if (capacity <= 0) {
+            throw new InvalidCapacityException(
+                "Invalid capacity: " + capacity +
+                " for bogie '" + name + "'. Capacity must be > 0.");
+        }
+        this.name     = name;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (capacity: " + capacity + ")";
+    }
+}
+
+class UseCase14TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC14: Invalid Capacity Check  ");
+        System.out.println("=================================");
+
+        List<PassengerBogie> bogies = new ArrayList<>();
+
+        // Test 1: Valid bogie
+        System.out.println("\n[Test 1: Valid Capacity]");
+        try {
+            PassengerBogie b = new PassengerBogie("Sleeper", 72);
+            bogies.add(b);
+            System.out.println("Added: " + b);
+        } catch (InvalidCapacityException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        // Test 2: Zero capacity — should throw exception
+        System.out.println("\n[Test 2: Zero Capacity]");
+        try {
+            PassengerBogie b = new PassengerBogie("Empty-Bogie", 0);
+            bogies.add(b);
+        } catch (InvalidCapacityException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        // Test 3: Negative capacity — should throw exception
+        System.out.println("\n[Test 3: Negative Capacity]");
+        try {
+            PassengerBogie b = new PassengerBogie("Ghost-Bogie", -10);
+            bogies.add(b);
+        } catch (InvalidCapacityException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        // Test 4: Another valid bogie
+        System.out.println("\n[Test 4: Valid Capacity]");
+        try {
+            PassengerBogie b = new PassengerBogie("AC Chair", 64);
+            bogies.add(b);
+            System.out.println("Added: " + b);
+        } catch (InvalidCapacityException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+
+        System.out.println("\nValid Bogies in Consist: " + bogies.size());
+    }
+}
