@@ -355,3 +355,41 @@ class UseCase10TrainConsistApp {
         System.out.println("\nTotal Seating Capacity: " + totalSeats + " seats");
     }
 }
+// ============================================================
+// UC11: Validate Train ID & Cargo Codes (Regex)
+// Concepts: Regular Expressions, Pattern Class,
+//           Matcher Class, matches(), Format Enforcement
+// ============================================================
+class UseCase11TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC11: Validate IDs via Regex  ");
+        System.out.println("=================================");
+
+        // Define regex patterns
+        // Train ID format: TRN- followed by exactly 4 digits
+        Pattern trainIdPattern = Pattern.compile("TRN-\\d{4}");
+
+        // Cargo Code format: PET- followed by exactly 2 uppercase letters
+        Pattern cargoCodePattern = Pattern.compile("PET-[A-Z]{2}");
+
+        // Test Train IDs
+        String[] trainIds = {"TRN-1234", "TRN-99", "TRN-5678", "ABC-1234"};
+        System.out.println("\nTrain ID Validation:");
+        for (String id : trainIds) {
+            Matcher m = trainIdPattern.matcher(id);
+            System.out.println("  " + id + " -> " +
+                               (m.matches() ? "VALID ✓" : "INVALID ✗"));
+        }
+
+        // Test Cargo Codes
+        String[] cargoCodes = {"PET-AB", "PET-ab", "PET-A", "PET-XY", "GDS-AB"};
+        System.out.println("\nCargo Code Validation:");
+        for (String code : cargoCodes) {
+            Matcher m = cargoCodePattern.matcher(code);
+            System.out.println("  " + code + " -> " +
+                               (m.matches() ? "VALID ✓" : "INVALID ✗"));
+        }
+    }
+}
