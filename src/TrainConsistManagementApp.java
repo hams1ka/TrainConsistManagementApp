@@ -164,3 +164,39 @@ class UseCase5TrainConsistApp {
         System.out.println("(LinkedHashSet preserved order AND rejected duplicates)");
     }
 }
+// ============================================================
+// UC6: Map Bogie to Capacity (HashMap)
+// Concepts: HashMap, Map Interface, put(), entrySet(),
+//           Key-Value Association, Fast Lookup
+// ============================================================
+class UseCase6TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC6: Bogie Capacity Mapping   ");
+        System.out.println("=================================");
+
+        // HashMap maps each bogie name (key) to its capacity (value)
+        HashMap<String, Integer> bogieCapacity = new HashMap<>();
+
+        // Map bogies to their seating capacities
+        bogieCapacity.put("Sleeper",     72);
+        bogieCapacity.put("AC Chair",    64);
+        bogieCapacity.put("First Class", 18);
+        bogieCapacity.put("General",     90);
+        bogieCapacity.put("Pantry",       0);
+
+        // Iterate using entrySet() — gives both key and value
+        System.out.println("\nBogie Capacity Details:");
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println("  " + entry.getKey() +
+                               " -> " + entry.getValue() + " seats");
+        }
+
+        // Fast lookup using key
+        System.out.println("\nSleeper capacity    : " +
+                           bogieCapacity.get("Sleeper"));
+        System.out.println("First Class capacity: " +
+                           bogieCapacity.get("First Class"));
+    }
+}
