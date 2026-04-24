@@ -604,3 +604,70 @@ class UseCase14TrainConsistApp {
         System.out.println("\nValid Bogies in Consist: " + bogies.size());
     }
 }
+// ============================================================
+// UC15: Safe Cargo Assignment (try-catch-finally)
+// Concepts: try-catch-finally, Runtime Exception,
+//           Custom Runtime Exception, throw, Graceful Failure
+// ============================================================
+
+// Custom runtime exception for unsafe cargo assignments
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
+// Cargo assignment logic
+class CargoAssignmentService {
+    // Assign cargo to a bogie — validates compatibility
+    public void assignCargo(String bogieShape, String cargoType) {
+        try {
+            System.out.println("\nAttempting: Assign '" + cargoType +
+                               "' to " + bogieShape + " bogie...");
+
+            // Safety rule: Petroleum cannot go in rectangular bogie
+            if (bogieShape.equals("Rectangular") &&
+                cargoType.equals("Petroleum")) {
+                throw new CargoSafetyException(
+                    "UNSAFE: Petroleum cannot be assigned to Rectangular bogie!");
+            }
+
+            // If safe, confirm assignment
+            System.out.println("SUCCESS: '" + cargoType +
+                               "' assigned to " + bogieShape + " bogie.");
+
+        } catch (CargoSafetyException e) {
+            // Handle unsafe assignment gracefully
+            System.out.println("[SAFETY ERROR] " + e.getMessage());
+
+        } finally {
+            // Always executes — used for logging/cleanup
+            System.out.println("[LOG] Cargo assignment attempt completed.");
+        }
+    }
+}
+
+class UseCase15TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC15: Safe Cargo Assignment   ");
+        System.out.println("=================================");
+
+        CargoAssignmentService service = new CargoAssignmentService();
+
+        // Test 1: Safe assignment — Cylindrical + Petroleum
+        service.assignCargo("Cylindrical", "Petroleum");
+
+        // Test 2: Safe assignment — Rectangular + Coal
+        service.assignCargo("Rectangular", "Coal");
+
+        // Test 3: Unsafe assignment — Rectangular + Petroleum
+        service.assignCargo("Rectangular", "Petroleum");
+
+        // Test 4: Safe assignment — Cylindrical + Steel
+        service.assignCargo("Cylindrical", "Steel");
+
+        System.out.println("\n[System continues safely after all assignments]");
+    }
+}
