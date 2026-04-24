@@ -671,3 +671,43 @@ class UseCase15TrainConsistApp {
         System.out.println("\n[System continues safely after all assignments]");
     }
 }
+// ============================================================
+// UC16: Sort Passenger Bogies by Capacity (Bubble Sort)
+// Concepts: Bubble Sort, Array Manipulation, Nested Loops,
+//           Swapping Logic, Time Complexity O(n²)
+// ============================================================
+class UseCase16TrainConsistApp {
+    public static void main(String[] args) {
+        System.out.println("=================================");
+        System.out.println("  Train Consist Management App  ");
+        System.out.println("  UC16: Bubble Sort Capacities  ");
+        System.out.println("=================================");
+
+        // Array of passenger bogie capacities
+        int[] capacities = {72, 18, 90, 64, 0, 45, 36};
+
+        System.out.println("\nBefore Sorting:");
+        System.out.print("  ");
+        for (int c : capacities) System.out.print(c + " ");
+
+        // Bubble Sort — compare adjacent, swap if out of order
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {           // Outer: passes
+            for (int j = 0; j < n - 1 - i; j++) {   // Inner: comparisons
+                if (capacities[j] > capacities[j + 1]) {
+                    // Swap adjacent elements
+                    int temp          = capacities[j];
+                    capacities[j]     = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println("\n\nAfter Bubble Sort (Ascending):");
+        System.out.print("  ");
+        for (int c : capacities) System.out.print(c + " ");
+
+        System.out.println("\n\nNote: Bubble Sort uses O(n²) — " +
+                           "educational only, not for production.");
+    }
+}
